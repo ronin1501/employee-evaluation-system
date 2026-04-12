@@ -33,7 +33,7 @@ def init_db():
 
     # Создаем админа по умолчанию
     try:
-        hashed_pw = generate_password_hash('admin')
+        hashed_pw = generate_password_hash('admin', method='pbkdf2:sha256')
         conn.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)", ('admin', hashed_pw, 'admin'))
     except sqlite3.IntegrityError:
         pass 

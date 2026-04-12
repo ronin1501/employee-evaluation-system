@@ -121,7 +121,7 @@ def add_user():
     password = request.form.get('password')
     role = request.form.get('role') or 'manager'
     if username and password:
-        hashed_pw = generate_password_hash(password)
+        hashed_pw = generate_password_hash(password, method='pbkdf2:sha256')
         conn = get_db_connection()
         try:
             conn.execute("INSERT INTO users (username, password, role) VALUES (?, ?, ?)", (username, hashed_pw, role))
