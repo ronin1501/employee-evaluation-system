@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 style="margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
+    <span class="material-symbols-rounded" style="color: #f1c40f; font-size: 32px;">analytics</span>
+    Журнал и история оценок
+</h2>
+
+<div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th
+                    style="padding: 18px; background: #f8fafc; color: #64748b; font-size: 0.8rem; border-bottom: 2px solid #edf2f7;">
+                    Дата</th>
+                <th
+                    style="padding: 18px; background: #f8fafc; color: #64748b; font-size: 0.8rem; border-bottom: 2px solid #edf2f7;">
+                    Сотрудник</th>
+                <th
+                    style="padding: 18px; background: #f8fafc; color: #64748b; font-size: 0.8rem; border-bottom: 2px solid #edf2f7;">
+                    Отдел</th>
+                <th
+                    style="padding: 18px; background: #f8fafc; color: #64748b; font-size: 0.8rem; border-bottom: 2px solid #edf2f7; text-align: center;">
+                    Балл</th>
+                <th
+                    style="padding: 18px; background: #f8fafc; color: #64748b; font-size: 0.8rem; border-bottom: 2px solid #edf2f7;">
+                    Вердикт</th>
+                <th
+                    style="padding: 18px; background: #f8fafc; color: #64748b; font-size: 0.8rem; border-bottom: 2px solid #edf2f7; text-align: center;">
+                    Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in results %}
+            {# Логика определения цвета вынесена отдельно, чтобы не злить CSS-валидатор #}
+            {% set v_color = '#64748b' %}
+            {% if row.verdict %}
+            {% if 'A' in row.verdict %}{% set v_color = '#28c940' %}
+            {% elif 'B' in row.verdict %}{% set v_color = '#3498db' %}
+            {% elif 'C' in row.verdict %}{% set v_color = '#f1c40f' %}
+            {% elif 'D' in row.verdict %}{% set v_color = '#e74c3c' %}{% endif %}
+            {% endif %}
+
+            <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.2s;">
+                <td style="padding: 15px; color: #94a3b8; font-size: 0.85rem;">
+                    <div style="display: flex; align-items: center; gap: 5px;">
+                        <span class="material-symbols-rounded" style="font-size: 16px;">calendar_today</span>
+                        {{ row.date_added }}
+                    </div>
+                </td>
+                <td style="padding: 15px; font-weight: 600; color: #1e293b;">{{ row.name }}</td>
+                <td style="padding: 15px; color: #64748b;">
+                    <span style="background: #f1f5f9; padding: 4px 10px; border-radius: 6px; font-size: 0.85rem;">
+                        {{ row.department }}
+                    </span>
+                </td>
+                <td style="padding: 15px; text-align: center;">
+                    <span
+                        style="background: #e0f2fe; color: #0369a1; padding: 5px 12px; border-radius: 8px; font-weight: 700;">
+                        {{ row.total_score }}
+                    </span>
+                </td>
+                <td style="padding: 15px;">
+                    <div style="display: flex; align-items: center; gap: 8px; color: {{ v_color }}; font-weight: 500;">
+                        <span class="material-symbols-rounded" style="font-size: 18px;">verified</span>
+                        {{ row.verdict }}
+                    </div>
+                </td>
+                <td style="padding: 15px; text-align: center;">
+                    <div style="display: flex; gap: 10px; justify-content: center;">
+                        <a href="/static/charts/{{ row.name|replace(' ', '_') }}.png" target="_blank"
+                            title="Посмотреть график"
+                            style="display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; background: #f1f5f9; color: #475569; border-radius: 8px; text-decoration: none;">
+                            <span class="material-symbols-rounded" style="font-size: 20px;">monitoring</span>
+                        </a>
+                        <a href="{{ url_for('export_pdf', res_id=row.id) }}" title="Скачать PDF"
+                            style="display: flex; align-items: center; justify-content: center; width: 35px; height: 35px; background: #fee2e2; color: #b91c1c; border-radius: 8px; text-decoration: none;">
+                            <span class="material-symbols-rounded" style="font-size: 20px;">picture_as_pdf</span>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" style="padding: 40px; text-align: center; color: #94a3b8;">
+                    <span class="material-symbols-rounded"
+                        style="font-size: 48px; display: block; margin-bottom: 10px;">folder_open</span>
+                    История оценок пока пуста
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

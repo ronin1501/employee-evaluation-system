@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 style="margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
+    <span class="material-symbols-rounded" style="color: #9b59b6; font-size: 32px;">edit_note</span>
+    Новая оценка сотрудника
+</h2>
+
+<div
+    style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; border-left: 5px solid #9b59b6; display: flex; align-items: center; gap: 15px;">
+    <span class="material-symbols-rounded" style="color: #9b59b6; font-size: 30px;">psychology</span>
+    <p style="margin: 0; font-size: 0.95rem; color: #475569; line-height: 1.5;">
+        <strong style="color: #1e293b;">Методология:</strong> Автоматизация системы исключает субъективность.
+        Оценивайте только фактические результаты работы по принципу <span
+            style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-weight: 600;">Facts vs
+            Evaluations</span>.
+    </p>
+</div>
+
+<div
+    style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); max-width: 800px; margin: 0 auto;">
+    <form method="POST">
+        <div style="margin-bottom: 30px;">
+            <label
+                style="display: block; font-weight: 600; color: #1e293b; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                <span class="material-symbols-rounded" style="font-size: 20px; color: #64748b;">person_search</span>
+                Выберите сотрудника из базы
+            </label>
+            <select name="staff_id" required
+                style="width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #e2e8f0; background: #f8fafc; font-family: inherit; font-size: 1rem; color: #1e293b; transition: 0.3s; cursor: pointer;">
+                <option value="" disabled selected>-- Нажмите, чтобы выбрать --</option>
+                {% for person in staff_list %}
+                <option value="{{ person.id }}">{{ person.name }}{% if person.department %} ({{ person.department }}){%
+                    endif %}</option>
+                {% endfor %}
+            </select>
+            <p style="margin-top: 10px;"><small><a href="/staff"
+                        style="color: #3498db; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 4px;">
+                        <span class="material-symbols-rounded" style="font-size: 16px;">add_circle</span> Добавить
+                        нового в базу
+                    </a></small></p>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #f1f5f9; margin-bottom: 30px;">
+
+        <style>
+            input[type=range] {
+                -webkit-appearance: none;
+                height: 8px;
+                border-radius: 5px;
+                background: #e2e8f0;
+                outline: none;
+                margin: 15px 0;
+                transition: 0.2s;
+            }
+
+            input[type=range]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                background: #fff;
+                border: 3px solid;
+                cursor: pointer;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                transition: 0.2s;
+            }
+
+            input[type=range]::-webkit-slider-thumb:hover {
+                transform: scale(1.1);
+            }
+
+            /* Цвета для разных категорий */
+            .range-soft::-webkit-slider-thumb {
+                border-color: #3498db;
+            }
+
+            .range-hard::-webkit-slider-thumb {
+                border-color: #28c940;
+            }
+
+            .range-eff::-webkit-slider-thumb {
+                border-color: #f1c40f;
+            }
+        </style>
+
+        <div style="margin-bottom: 35px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 8px;">
+                    <span class="material-symbols-rounded" style="color: #3498db;">forum</span> Soft Skills
+                </label>
+                <output
+                    style="background: #3498db; color: white; padding: 2px 12px; border-radius: 20px; font-weight: 700; min-width: 25px; text-align: center;">3</output>
+            </div>
+            <p style="margin: 0; font-size: 0.8rem; color: #94a3b8;">Коммуникация, работа в команде, эмоциональный
+                интеллект</p>
+            <input type="range" name="soft" min="1" max="5" step="1" value="3" class="range-soft" style="width: 100%;"
+                oninput="this.previousElementSibling.previousElementSibling.querySelector('output').value = this.value">
+        </div>
+
+        <div style="margin-bottom: 35px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 8px;">
+                    <span class="material-symbols-rounded" style="color: #28c940;">terminal</span> Hard Skills
+                </label>
+                <output
+                    style="background: #28c940; color: white; padding: 2px 12px; border-radius: 20px; font-weight: 700; min-width: 25px; text-align: center;">3</output>
+            </div>
+            <p style="margin: 0; font-size: 0.8rem; color: #94a3b8;">Профессиональные знания, технические навыки и опыт
+            </p>
+            <input type="range" name="hard" min="1" max="5" step="1" value="3" class="range-hard" style="width: 100%;"
+                oninput="this.previousElementSibling.previousElementSibling.querySelector('output').value = this.value">
+        </div>
+
+        <div style="margin-bottom: 40px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label style="font-weight: 600; color: #334155; display: flex; align-items: center; gap: 8px;">
+                    <span class="material-symbols-rounded" style="color: #f1c40f;">bolt</span> Efficiency
+                </label>
+                <output
+                    style="background: #f1c40f; color: white; padding: 2px 12px; border-radius: 20px; font-weight: 700; min-width: 25px; text-align: center;">3</output>
+            </div>
+            <p style="margin: 0; font-size: 0.8rem; color: #94a3b8;">Личная эффективность, выполнение KPI и скорость
+                работы</p>
+            <input type="range" name="eff" min="1" max="5" step="1" value="3" class="range-eff" style="width: 100%;"
+                oninput="this.previousElementSibling.previousElementSibling.querySelector('output').value = this.value">
+        </div>
+
+        <button type="submit"
+            style="width: 100%; padding: 18px; background: #2c3e50; color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 4px 15px rgba(44, 62, 80, 0.2);">
+            <span class="material-symbols-rounded">rocket_launch</span>
+            Запустить алгоритм автоматической оценки
+        </button>
+    </form>
+</div>
+{% endblock %}

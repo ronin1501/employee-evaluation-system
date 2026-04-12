@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 style="margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
+    <span class="material-symbols-rounded" style="color: #3498db; font-size: 32px;">domain</span>
+    Структура организации (Отделы)
+</h2>
+
+<div
+    style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 35px; border-left: 5px solid #3498db;">
+    <h3 style="margin-top: 0; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+        <span class="material-symbols-rounded" style="color: #28c940; font-size: 20px;">add_circle</span>
+        Добавить новый отдел
+    </h3>
+    <form action="/add_department" method="POST" style="display: flex; gap: 15px; margin-top: 15px;">
+        <input type="text" name="name" placeholder="Название отдела (например, Отдел маркетинга)" required
+            style="padding: 12px; flex: 2; border-radius: 8px; border: 1px solid #e2e8f0; font-family: inherit; font-size: 0.95rem;">
+        <button type="submit"
+            style="padding: 12px 25px; background: #2c3e50; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s;">
+            Добавить в структуру
+        </button>
+    </form>
+</div>
+
+<div style="max-width: 800px;">
+    <table
+        style="width: 100%; border-collapse: separate; border-spacing: 0; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <thead>
+            <tr>
+                <th
+                    style="background: #f8fafc; color: #64748b; padding: 15px; text-align: center; width: 80px; border-bottom: 2px solid #edf2f7;">
+                    ID</th>
+                <th style="background: #f8fafc; color: #64748b; padding: 15px; border-bottom: 2px solid #edf2f7;">
+                    Название подразделения</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in depts %}
+            <tr style="transition: background 0.2s;">
+                <td style="padding: 15px; text-align: center; color: #94a3b8; border-bottom: 1px solid #f1f5f9;">#{{
+                    d.id }}</td>
+                <td style="padding: 15px; font-weight: 500; color: #1e293b; border-bottom: 1px solid #f1f5f9;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span class="material-symbols-rounded"
+                            style="color: #94a3b8; font-size: 18px;">corporate_fare</span>
+                        {{ d.name }}
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="2" style="padding: 30px; text-align: center; color: #94a3b8;">Отделы еще не добавлены</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

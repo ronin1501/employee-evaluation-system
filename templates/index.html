@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 style="margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
+    <span class="material-symbols-rounded" style="color: #3498db; font-size: 32px;">dashboard</span>
+    Информационная панель
+</h2>
+
+<div style="display: flex; gap: 20px; margin-bottom: 40px;">
+    <div
+        style="flex: 1; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid #3498db;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <p style="color: #64748b; margin: 0; font-size: 0.9rem; font-weight: 500;">Штат сотрудников</p>
+                <h1 style="margin: 10px 0 0 0; font-size: 2.2rem; color: #1e293b;">{{ total_staff }}</h1>
+            </div>
+            <span class="material-symbols-rounded" style="color: #3498db; opacity: 0.2; font-size: 40px;">groups</span>
+        </div>
+    </div>
+
+    <div
+        style="flex: 1; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid #28c940;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <p style="color: #64748b; margin: 0; font-size: 0.9rem; font-weight: 500;">Всего оценок</p>
+                <h1 style="margin: 10px 0 0 0; font-size: 2.2rem; color: #1e293b;">{{ total_assessments }}</h1>
+            </div>
+            <span class="material-symbols-rounded"
+                style="color: #28c940; opacity: 0.2; font-size: 40px;">assignment_turned_in</span>
+        </div>
+    </div>
+
+    <div
+        style="flex: 1; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid #f1c40f;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <p style="color: #64748b; margin: 0; font-size: 0.9rem; font-weight: 500;">Средний балл</p>
+                <h1 style="margin: 10px 0 0 0; font-size: 2.2rem; color: #1e293b;">{{ avg_score }}</h1>
+            </div>
+            <span class="material-symbols-rounded" style="color: #f1c40f; opacity: 0.2; font-size: 40px;">star</span>
+        </div>
+    </div>
+</div>
+
+<div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <h3 style="display: flex; align-items: center; gap: 10px; margin-top: 0;">
+        <span class="material-symbols-rounded" style="color: #28c940;">compare_arrows</span>
+        Сравнение компетенций
+    </h3>
+    <p style="color: #64748b; margin-bottom: 25px;">Выберите сотрудников для визуального сопоставления профилей:</p>
+
+    <form style="display: flex; gap: 15px; align-items: flex-end; margin-bottom: 30px;">
+        <div style="flex: 1;">
+            <label style="display: block; font-size: 0.8rem; color: #94a3b8; margin-bottom: 5px;">Сотрудник №1</label>
+            <select id="s1"
+                style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-family: inherit;">
+                {% for s in staff_list %}<option value="{{ s.name }}">{{ s.name }}</option>{% endfor %}
+            </select>
+        </div>
+        <div style="flex: 1;">
+            <label style="display: block; font-size: 0.8rem; color: #94a3b8; margin-bottom: 5px;">Сотрудник №2</label>
+            <select id="s2"
+                style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-family: inherit;">
+                {% for s in staff_list %}<option value="{{ s.name }}">{{ s.name }}</option>{% endfor %}
+            </select>
+        </div>
+        <button type="button" onclick="compare()"
+            style="padding: 12px 25px; background: #2c3e50; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s;">
+            Сравнить
+        </button>
+    </form>
+
+    <div id="compare-result"
+        style="display: none; gap: 20px; justify-content: center; padding-top: 20px; border-top: 1px solid #f1f5f9;">
+    </div>
+</div>
+
+<script>
+    function compare() {
+        let s1 = document.getElementById('s1').value.replace(/ /g, '_');
+        let s2 = document.getElementById('s2').value.replace(/ /g, '_');
+        let res = document.getElementById('compare-result');
+        res.style.display = 'flex';
+        res.innerHTML = `
+                <div style="text-align: center; flex: 1;">
+                    <p style="font-weight: 600; color: #64748b; margin-bottom: 10px;">${s1.replace(/_/g, ' ')}</p>
+                    <img src="/static/charts/${s1}.png" style="width:100%; border-radius: 10px; border: 1px solid #edf2f7; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                </div>
+                <div style="text-align: center; flex: 1;">
+                    <p style="font-weight: 600; color: #64748b; margin-bottom: 10px;">${s2.replace(/_/g, ' ')}</p>
+                    <img src="/static/charts/${s2}.png" style="width:100%; border-radius: 10px; border: 1px solid #edf2f7; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                </div>
+            `;
+    }
+</script>
+{% endblock %}

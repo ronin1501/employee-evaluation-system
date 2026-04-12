@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 style="margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
+    <span class="material-symbols-rounded" style="color: #28c940; font-size: 32px;">group_add</span>
+    Управление персоналом
+</h2>
+
+<div
+    style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 35px; border-left: 5px solid #28c940;">
+    <h3 style="margin-top: 0; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+        <span class="material-symbols-rounded" style="color: #3498db; font-size: 20px;">person_add</span>
+        Регистрация нового сотрудника
+    </h3>
+    <form action="{{ url_for('add_staff') }}" method="POST"
+        style="display: flex; gap: 15px; margin-top: 15px; flex-wrap: wrap;">
+        <input type="text" name="name" placeholder="ФИО сотрудника" required
+            style="padding: 12px; flex: 2; min-width: 250px; border-radius: 8px; border: 1px solid #e2e8f0; font-family: inherit;">
+
+        <select name="dept_id" required
+            style="padding: 12px; flex: 1; min-width: 200px; border-radius: 8px; border: 1px solid #e2e8f0; font-family: inherit; background: white;">
+            <option value="" disabled selected>Выберите отдел</option>
+            {% for d in depts %}
+            <option value="{{ d.id }}">{{ d.name }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit"
+            style="padding: 12px 25px; background: #28c940; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; display: flex; align-items: center; gap: 8px;">
+            <span class="material-symbols-rounded" style="font-size: 18px;">save</span> Сохранить
+        </button>
+    </form>
+</div>
+
+<div style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th
+                    style="padding: 18px; background: #f8fafc; color: #64748b; font-size: 0.8rem; border-bottom: 2px solid #edf2f7; text-align: center; width: 80px;">
+                    ID</th>
+                <th
+                    style="padding: 18px; background: #f8fafc; color: #64748b; font-size: 0.8rem; border-bottom: 2px solid #edf2f7;">
+                    ФИО</th>
+                <th
+                    style="padding: 18px; background: #f8fafc; color: #64748b; font-size: 0.8rem; border-bottom: 2px solid #edf2f7;">
+                    Отдел</th>
+                <th
+                    style="padding: 18px; background: #f8fafc; color: #64748b; font-size: 0.8rem; border-bottom: 2px solid #edf2f7; text-align: center;">
+                    Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in staff %}
+            <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.2s;">
+                <td style="padding: 15px; text-align: center; color: #94a3b8; font-size: 0.85rem;">#{{ s.id }}</td>
+                <td style="padding: 15px;">
+                    <div style="display: flex; align-items: center; gap: 10px; font-weight: 600; color: #1e293b;">
+                        <span class="material-symbols-rounded"
+                            style="color: #64748b; font-size: 20px;">account_circle</span>
+                        {{ s.name }}
+                    </div>
+                </td>
+                <td style="padding: 15px;">
+                    <span
+                        style="background: #f1f5f9; color: #475569; padding: 5px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 500;">
+                        {{ s.dept_name }}
+                    </span>
+                </td>
+                <td style="padding: 15px; text-align: center;">
+                    {% if session.role == 'admin' %}
+                    <a href="{{ url_for('archive_staff', id=s.id) }}"
+                        onclick="return confirm('Вы уверены, что хотите отправить сотрудника в архив?')"
+                        style="display: inline-flex; align-items: center; gap: 5px; color: #e74c3c; text-decoration: none; font-size: 0.85rem; font-weight: 600; padding: 6px 12px; border-radius: 6px; transition: 0.2s; background: #fff5f5;">
+                        <span class="material-symbols-rounded" style="font-size: 18px;">archive</span>
+                        В архив
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" style="padding: 40px; text-align: center; color: #94a3b8;">Список сотрудников пуст</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
