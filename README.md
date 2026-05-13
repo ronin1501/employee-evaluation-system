@@ -64,8 +64,46 @@ The application is intended for HR process automation and personnel assessment w
 ```bash
 git clone https://github.com/ronin1501/employee-evaluation-system.git
 cd employee-evaluation-system
+```
+
+### Install dependencies
+
+```bash
 pip install -r requirements.txt
-pip install -r requirements.txt
+```
+
+### Run application
+
+Using Python:
+
+```bash
+python app.py
+```
+
+or using shell script on macOS/Linux:
+
+```bash
+chmod +x start.sh
+./start.sh
+```
+
+### Local server
+
+After запуск the application will be available at:
+
+```text
+http://127.0.0.1:5000/
+```
+
+---
+
+## 💻 Environment
+
+The project was developed and tested on:
+
+- macOS
+- Python 3.x
+- Flask
 
 ## 👩‍💻 Author
 
