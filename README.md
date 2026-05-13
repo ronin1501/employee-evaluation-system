@@ -25,4 +25,19 @@ A full-stack web application for employee evaluation, HR workflow automation, an
 - Matplotlib
 - ReportLab
 
-## Screenshots
+## 📸 Screenshots
+
+### 🔐 Login Page
+![Login](screenshots/login.png)
+
+### 🏠 Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### 👥 Employee Management
+![Employees](screenshots/employees.png)
+
+### 📋 Personnel Assessment
+![Assessment](screenshots/assessment.png)
+
+### 📊 Charts & Analytics
+![Charts](screenshots/charts.png)
