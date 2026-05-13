@@ -1,7 +1,7 @@
-# 📁 Структура проекта VKR_PROJECT
+# 📁 Структура проекта Employee Evaluation System
 
 ```text
-VKR_PROJECT/                                  # Корневая директория проекта
+employee-evaluation-system/                   # Корневая директория проекта
 ├── __pycache__/                              # Кэш скомпилированных Python-модулей
 │   ├── database.cpython-313.pyc              # Байткод модуля работы с БД
 │   └── models.cpython-313.pyc                # Байткод моделей данных

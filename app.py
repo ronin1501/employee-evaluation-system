@@ -13,7 +13,7 @@ from functools import wraps
 
 app = Flask(__name__)
 # Секретный ключ для сессий
-app.secret_key = os.environ.get('SECRET_KEY') or 'vkr_2026_secure_key'
+app.secret_key = os.environ.get('SECRET_KEY') or 'employee_evaluation_system_secure_key'
 
 # Настройка базы данных SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'

@@ -1,11 +1,17 @@
-from flask_sqlalchemy import SQLAlchemy
+import os
+
 from flask_login import UserMixin
+from flask_sqlalchemy import SQLAlchemy
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MPL_CONFIG_DIR = os.path.join(BASE_DIR, ".matplotlib")
+os.makedirs(MPL_CONFIG_DIR, exist_ok=True)
+os.environ.setdefault("MPLCONFIGDIR", MPL_CONFIG_DIR)
+
 import matplotlib
-matplotlib.use('Agg') 
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib import font_manager
-import os
 
 db = SQLAlchemy()
 
