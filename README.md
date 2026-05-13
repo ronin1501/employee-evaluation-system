@@ -40,4 +40,5 @@ A full-stack web application for employee evaluation, HR workflow automation, an
 ![Assessment](screenshots/assessment.png)
 
 ### 📊 Charts & Analytics
-![Charts](screenshots/charts.png)
+![Charts](screenshots/charts_1.png)
+![Charts](screenshots/charts_2.png)
