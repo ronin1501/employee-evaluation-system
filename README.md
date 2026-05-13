@@ -24,6 +24,25 @@ A full-stack web application for employee evaluation, HR workflow automation, an
 - HTML/CSS
 - Matplotlib
 - ReportLab
+- NumPy
+
+## 📁 Project Structure
+
+```text
+employee-evaluation-system/
+│── app.py                # Application entry point and routing
+│── database.py           # Database layer and SQLite connection
+│── models.py             # Evaluation logic and chart generation
+│── database.db           # SQLite database
+
+├── static/
+│   └── charts/           # Generated charts storage
+
+└── templates/
+    ├── base.html         # Base layout template
+    ├── index.html        # Main dashboard page
+    └── assessment.html   # Personnel assessment form
+```
 
 ## 📸 Screenshots
 
@@ -89,7 +108,7 @@ chmod +x start.sh
 
 ### Local server
 
-After запуск the application will be available at:
+After running the application, it will be available at:
 
 ```text
 http://127.0.0.1:5000/
@@ -104,6 +123,10 @@ The project was developed and tested on:
 - macOS
 - Python 3.x
 - Flask
+
+## 📌 Project Status
+
+The project is completed as an educational full-stack web application and can be extended with additional HR analytics features.
 
 ## 👩‍💻 Author
 
